@@ -1,11 +1,40 @@
+import random
 import pygame
 import sys
 import os
 
-pygame.init()
-size = width, height = 500, 500
-screen = pygame.display.set_mode(size)
-player = None
+# def create_level(u):
+#     filename = f"field{u}.txt"
+#     game_map = []
+#     map_w = random.randrange(10, 20)
+#     land_type = ["#", "."]
+#     for i in range(map_w):
+#         line = []
+#         map_h = random.randrange(6, 20)
+#         for j in range(map_h):
+#             line += random.choice(land_type)
+#         game_map.append(line)
+#     game_map[random.randint(0, 10)][random.randint(0, 10)] = "@"
+#
+#
+#
+#     with open(filename, 'w') as mapFile:
+#         for i in range(len(game_map)):
+#             game_map[i] = ''.join(game_map[i])
+#             mapFile.write(game_map[i] + '\n')
+#
+#
+# for i in range(4):
+#     create_level(i)
+
+lvl = None
+for line in sys.stdin:
+    lvl = line.rstrip("\n")
+if lvl:
+    pygame.init()
+    size = width, height = 500, 500
+    screen = pygame.display.set_mode(size)
+    player = None
 
 # группы спрайтов
 all_sprites = pygame.sprite.Group()
@@ -131,7 +160,7 @@ def load_level(filename):
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
 
-player, level_x, level_y, collided_list = generate_level(load_level('field.txt'))
+player, level_x, level_y, collided_list = generate_level(load_level(lvl))
 
 
 def start_screen():
@@ -140,7 +169,7 @@ def start_screen():
                   "Если в правилах несколько строк,",
                   "приходится выводить их построчно"]
 
-    fon = pygame.transform.scale(load_image('fon.jpg'), (width, height))
+    fon = pygame.transform.scale(load_image('fon3.jpg'), (width, height))
     screen.blit(fon, (0, 0))
     font = pygame.font.Font(None, 30)
     text_coord = 50
